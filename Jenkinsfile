@@ -1,29 +1,40 @@
-pipeline{
-    agent{
-        docker{
-            image 'mcr.microsoft.com/playwright:lastest'
+pipeline {
+    agent {
+        // ใช้ Docker executor ระบุเวอร์ชั่นเพื่อความเสถียร
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.17.2-focal' // เลือกเวอร์ชั่นที่รองรับ
         }
     }
-    stages{
-        stage('install playwright'){
-            steps{
-                sh '''
+    stages {
+        stage('ติดตั้ง Playwright') {
+            steps {
+                script {
+                    """
                     npm install -D playwright/test
                     npx playwright install
-                '''
+                    """
+                }
             }
         }
-        stage('help'){
-            steps{
-                sh 'npx playwright test --help'
+        stage('แสดงวิธีใช้ Playwright Test') {
+            steps {
+                script {
+                    // คำสั่งสั้น ๆ อยู่ในบรรทัดเดียว
+                    sh 'npx playwright test --help'
+                }
             }
         }
-        stage('run tests'){
-            steps{
-                sh '''
+        stage('รัน Playwright Tests') {
+            steps {
+                script {
+                    """
+                    # แสดงรายการเทสต์ที่มี
                     npx playwright test --list
+
+                    # รันเทสต์ทั้งหมด
                     npx playwright test
-                '''
+                    """
+                }
             }
         }
     }
