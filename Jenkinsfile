@@ -2,7 +2,7 @@ pipeline {
     agent {
         // ใช้ Docker executor ระบุเวอร์ชั่นเพื่อความเสถียร
         docker {
-            image 'mcr.microsoft.com/playwright:v1.17.2-focal' // เลือกเวอร์ชั่นที่รองรับ
+            image 'mcr.microsoft.com/playwright' // เลือกเวอร์ชั่นที่รองรับ
         }
     }
     stages {
